@@ -1,0 +1,56 @@
+# LiveKit server configuration for local development
+port: 7880
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 50100
+  use_external_ip: false
+
+keys:
+  # Development keys - replace with your actual keys for production
+  devkey: secret
+  devsecret: secret
+
+logging:
+  json: false
+  level: info
+
+# Redis configuration for LiveKit
+redis:
+  address: redis:6379
+
+# TURN server configuration (optional for local development)
+turn:
+  enabled: false
+
+# Health check configuration
+health:
+  enabled: true
+  port: 7883
+
+# Room settings
+room:
+  # Enable room creation
+  auto_create: true
+  # Enable participant connection
+  enable_remote_unmute: true
+  # Enable recording
+  enable_recording: false
+
+# Media settings
+media:
+  # Enable audio processing
+  enable_audio: true
+  # Enable video processing
+  enable_video: true
+  # Enable data channels
+  enable_data_channels: true
+
+# Agent settings
+agent:
+  # Enable AI agent functionality
+  enabled: true
+  # Agent timeout
+  timeout: 30s
+  # Max concurrent agents
+  max_concurrent: 10 
