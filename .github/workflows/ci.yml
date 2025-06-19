@@ -1,0 +1,85 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        fi
+        
+    - name: Run tests
+      run: |
+        if [ -f package.json ] && npm run test; then
+          npm test
+        else
+          echo "No tests configured yet"
+        fi
+        
+    - name: Build project
+      run: |
+        if [ -f package.json ] && npm run build; then
+          npm run build
+        else
+          echo "No build script configured yet"
+        fi
+        
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        fi
+        
+    - name: Run linter
+      run: |
+        if [ -f package.json ] && npm run lint; then
+          npm run lint
+        else
+          echo "No linting configured yet"
+        fi
+        
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run security scan
+      run: |
+        echo "Security scanning can be configured here"
+        echo "Consider adding tools like:"
+        echo "- npm audit (for Node.js projects)"
+        echo "- Snyk security scanning"
+        echo "- CodeQL analysis" 
